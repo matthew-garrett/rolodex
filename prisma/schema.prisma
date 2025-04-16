@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum NetworkingStage {
+  NEW
+  CONNECTED
+  FOLLOWUP
+}
+
+model Contact {
+  id               Int              @id @default(autoincrement())
+  name             String
+  city             String?
+  email            String?          @unique
+  phoneNumber      Int?
+  linkedIn         String?
+  hobbies          String?          // comma‑separated or JSON
+  networkingStage  String? 
+  lastContact      DateTime?
+  due              Boolean?        // next follow‑up date
+  introducedBy     String?
+  company          String?
+  industry         String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
